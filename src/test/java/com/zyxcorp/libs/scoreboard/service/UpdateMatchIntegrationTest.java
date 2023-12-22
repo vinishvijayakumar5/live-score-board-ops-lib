@@ -53,13 +53,24 @@ class UpdateMatchIntegrationTest {
     }
 
     @Test
-    void test_update_invalidMatchScore_shouldThrowInvalidScoreException() {
+    void test_update_invalidHomeTeamScore_shouldThrowInvalidScoreException() {
 
         InvalidScoreException exception = assertThrows(InvalidScoreException.class,
-                () -> matchScoreBoardService.update(1, 1, 2));
+                () -> matchScoreBoardService.update(1, 1, 3));
 
-        assertEquals("Invalid match score", exception.getMessage());
+        assertEquals("Invalid home team score", exception.getMessage());
         assertEquals("E104", exception.getContract());
+
+    }
+
+    @Test
+    void test_update_invalidAwayTeamScore_shouldThrowInvalidScoreException() {
+
+        InvalidScoreException exception = assertThrows(InvalidScoreException.class,
+                () -> matchScoreBoardService.update(1, 4, 2));
+
+        assertEquals("Invalid away team score", exception.getMessage());
+        assertEquals("E105", exception.getContract());
 
     }
 
