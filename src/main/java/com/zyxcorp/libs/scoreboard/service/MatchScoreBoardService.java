@@ -41,6 +41,12 @@ public class MatchScoreBoardService implements MatchScoreboard {
         throw new MatchNotFoundException("Match not found", "E103");
     }
 
+    @Override
+    public MatchDto update(int id, int homeTeamScore, int awayTeamScore) {
+        return null;
+    }
+
+
     private final Consumer<MatchDto> CREATE_MATCH = (dto -> {
         try {
             boolean exists = getRepository().isExists(dto.homeTeam().name(), dto.awayTeam().name());
