@@ -1,9 +1,10 @@
-package com.zyxcorp.libs.scoreboard.service;
+package com.zyxcorp.libs.scoreboard;
 
 import com.zyxcorp.libs.scoreboard.dto.MatchDto;
 import com.zyxcorp.libs.scoreboard.dto.ScoreDto;
 import com.zyxcorp.libs.scoreboard.exception.InvalidMatchException;
 import com.zyxcorp.libs.scoreboard.exception.MatchExistsException;
+import com.zyxcorp.libs.scoreboard.service.MatchScoreBoardService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

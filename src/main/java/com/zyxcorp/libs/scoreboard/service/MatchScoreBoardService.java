@@ -12,6 +12,8 @@ import com.zyxcorp.libs.scoreboard.repository.MatchScoreBoardRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
@@ -45,6 +47,11 @@ public class MatchScoreBoardService implements MatchScoreboard {
     public MatchDto update(int id, int homeTeamScore, int awayTeamScore) throws MatchNotFoundException, InvalidScoreException {
         updateMatchAcceptance(id, homeTeamScore, awayTeamScore);
         return getMapper().map(getRepository().update(id, homeTeamScore, awayTeamScore));
+    }
+
+    @Override
+    public List<MatchDto> get() throws MatchNotFoundException {
+        return null;
     }
 
     private void updateMatchAcceptance(int id, int homeTeamScore, int awayTeamScore) throws MatchNotFoundException, InvalidScoreException {
