@@ -2,8 +2,10 @@ package com.zyxcorp.libs.scoreboard.service;
 
 import com.zyxcorp.libs.scoreboard.MatchScoreboard;
 import com.zyxcorp.libs.scoreboard.dto.MatchDto;
+import com.zyxcorp.libs.scoreboard.entitiy.MatchEntity;
 import com.zyxcorp.libs.scoreboard.exception.InvalidMatchException;
 import com.zyxcorp.libs.scoreboard.exception.MatchExistsException;
+import com.zyxcorp.libs.scoreboard.exception.MatchNotFoundException;
 import com.zyxcorp.libs.scoreboard.mapper.MatchScoreBoardMapper;
 import com.zyxcorp.libs.scoreboard.repository.MatchScoreBoardRepository;
 import jakarta.validation.Valid;
@@ -23,6 +25,16 @@ public class MatchScoreBoardService implements MatchScoreboard {
     public int create(@Valid MatchDto dto) {
         CREATE_MATCH.accept(dto);
         return getRepository().insert(getMapper().map(dto));
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public MatchDto get(int id) {
+        return null;
     }
 
     private final Consumer<MatchDto> CREATE_MATCH = (dto -> {

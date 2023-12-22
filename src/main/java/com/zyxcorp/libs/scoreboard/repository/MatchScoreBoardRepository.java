@@ -26,6 +26,10 @@ public class MatchScoreBoardRepository {
         return id;
     }
 
+    public MatchEntity findById(int id) {
+        return null;
+    }
+
     private int idSequence() {
         return entities.size() + 1;
     }
