@@ -2,6 +2,7 @@ package com.zyxcorp.libs.scoreboard.service;
 
 import com.zyxcorp.libs.scoreboard.dto.MatchDto;
 import com.zyxcorp.libs.scoreboard.dto.ScoreDto;
+import com.zyxcorp.libs.scoreboard.exception.InvalidMatchException;
 import com.zyxcorp.libs.scoreboard.exception.MatchExistsException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -23,13 +24,13 @@ class StartMatchIntegrationTest {
     private MatchScoreBoardService matchScoreBoardService;
 
     @BeforeAll
-    public void setup() {
+    public void setup() throws MatchExistsException, InvalidMatchException {
         MockitoAnnotations.openMocks(this);
         matchScoreBoardService.create(matchDefaultDto());
     }
 
     @Test
-    void test_create_validMatch_shouldReturnValidMatchId() {
+    void test_create_validMatch_shouldReturnValidMatchId() throws MatchExistsException, InvalidMatchException {
 
         int matchId = matchScoreBoardService.create(matchDto());
 

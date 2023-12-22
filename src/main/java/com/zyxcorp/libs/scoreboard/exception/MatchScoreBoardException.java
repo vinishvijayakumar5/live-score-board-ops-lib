@@ -3,7 +3,7 @@ package com.zyxcorp.libs.scoreboard.exception;
 import lombok.Getter;
 
 @Getter
-public class MatchScoreBoardException extends RuntimeException {
+public class MatchScoreBoardException extends Exception {
 
     private static final long serialVersionUID = 1L;
 

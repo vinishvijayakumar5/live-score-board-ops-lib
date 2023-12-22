@@ -2,7 +2,9 @@ package com.zyxcorp.libs.scoreboard.service;
 
 import com.zyxcorp.libs.scoreboard.dto.MatchDto;
 import com.zyxcorp.libs.scoreboard.dto.ScoreDto;
+import com.zyxcorp.libs.scoreboard.exception.InvalidMatchException;
 import com.zyxcorp.libs.scoreboard.exception.InvalidScoreException;
+import com.zyxcorp.libs.scoreboard.exception.MatchExistsException;
 import com.zyxcorp.libs.scoreboard.exception.MatchNotFoundException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -23,13 +25,13 @@ class UpdateMatchIntegrationTest {
     private MatchScoreBoardService matchScoreBoardService;
 
     @BeforeAll
-    public void setup() {
+    public void setup() throws MatchExistsException, InvalidMatchException {
         MockitoAnnotations.openMocks(this);
         matchScoreBoardService.create(matchDefaultDto());
     }
 
     @Test
-    void test_update_validMatch_shouldUpdateMatch_ThenReturnUpdatedMatch() {
+    void test_update_validMatch_shouldUpdateMatch_ThenReturnUpdatedMatch() throws InvalidScoreException, MatchNotFoundException {
 
         MatchDto dto = matchScoreBoardService.update(1, 4, 3);
 
@@ -67,7 +69,7 @@ class UpdateMatchIntegrationTest {
     void test_update_invalidAwayTeamScore_shouldThrowInvalidScoreException() {
 
         InvalidScoreException exception = assertThrows(InvalidScoreException.class,
-                () -> matchScoreBoardService.update(1, 4, 2));
+                () -> matchScoreBoardService.update(1, 4, 1));
 
         assertEquals("Invalid away team score", exception.getMessage());
         assertEquals("E105", exception.getContract());

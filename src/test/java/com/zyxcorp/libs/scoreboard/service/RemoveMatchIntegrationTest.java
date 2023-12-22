@@ -2,6 +2,8 @@ package com.zyxcorp.libs.scoreboard.service;
 
 import com.zyxcorp.libs.scoreboard.dto.MatchDto;
 import com.zyxcorp.libs.scoreboard.dto.ScoreDto;
+import com.zyxcorp.libs.scoreboard.exception.InvalidMatchException;
+import com.zyxcorp.libs.scoreboard.exception.MatchExistsException;
 import com.zyxcorp.libs.scoreboard.exception.MatchNotFoundException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -22,7 +24,7 @@ class RemoveMatchIntegrationTest {
     private MatchScoreBoardService matchScoreBoardService;
 
     @BeforeAll
-    public void setup() {
+    public void setup() throws MatchExistsException, InvalidMatchException {
         MockitoAnnotations.openMocks(this);
         matchScoreBoardService.create(matchDefaultDto());
     }
