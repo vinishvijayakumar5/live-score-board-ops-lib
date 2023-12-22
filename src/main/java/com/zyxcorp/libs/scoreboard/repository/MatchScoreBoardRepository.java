@@ -26,8 +26,12 @@ public class MatchScoreBoardRepository {
         return id;
     }
 
+    public void deleteById(int id) {
+        entities.remove(id);
+    }
+
     public MatchEntity findById(int id) {
-        return null;
+        return entities.get(id);
     }
 
     private int idSequence() {

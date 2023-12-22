@@ -29,12 +29,16 @@ public class MatchScoreBoardService implements MatchScoreboard {
 
     @Override
     public void delete(int id) {
-
+        getRepository().deleteById(id);
     }
 
     @Override
     public MatchDto get(int id) {
-        return null;
+        MatchEntity entity = getRepository().findById(id);
+        if(nonNull(entity)) {
+            return getMapper().map(entity);
+        }
+        throw new MatchNotFoundException("Match not found", "E103");
     }
 
     private final Consumer<MatchDto> CREATE_MATCH = (dto -> {
