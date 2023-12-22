@@ -1,10 +1,14 @@
 package com.zyxcorp.libs.scoreboard.entitiy;
 
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Builder
+@Getter
+@Setter
 public class MatchEntity {
 
     private int id;
