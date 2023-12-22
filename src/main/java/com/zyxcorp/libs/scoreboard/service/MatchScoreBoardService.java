@@ -12,10 +12,13 @@ import com.zyxcorp.libs.scoreboard.repository.MatchScoreBoardRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
+import static org.apache.commons.collections4.CollectionUtils.isEmpty;
 
 @AllArgsConstructor
 public class MatchScoreBoardService implements MatchScoreboard {
@@ -51,7 +54,16 @@ public class MatchScoreBoardService implements MatchScoreboard {
 
     @Override
     public List<MatchDto> get() throws MatchNotFoundException {
-        return null;
+        List<MatchEntity> entities = getRepository().findAll();
+        if(isEmpty(entities)) {
+            throw new MatchNotFoundException("No matches not found", "E106");
+        }
+        return entities.stream()
+                .sorted(Comparator.comparing(MatchEntity::getTotalPoints)
+                        .thenComparing(MatchEntity::getCreatedOn)
+                        .reversed())
+                .map(m -> mapper.map(m))
+                .collect(Collectors.toList());
     }
 
     private void updateMatchAcceptance(int id, int homeTeamScore, int awayTeamScore) throws MatchNotFoundException, InvalidScoreException {
@@ -59,10 +71,10 @@ public class MatchScoreBoardService implements MatchScoreboard {
         if(isNull(entity)) {
             throw new MatchNotFoundException("Match not found", "E103");
         }
-        validateScore(entity, homeTeamScore, awayTeamScore);
+        validateScores(entity, homeTeamScore, awayTeamScore);
     }
 
-    private void validateScore(MatchEntity entity, int homeTeamScore, int awayTeamScore) throws InvalidScoreException {
+    private void validateScores(MatchEntity entity, int homeTeamScore, int awayTeamScore) throws InvalidScoreException {
         if(homeTeamScore < entity.getHomeTeamPoints()) {
             throw new InvalidScoreException("Invalid home team score", "E104");
         } else if(awayTeamScore < entity.getAwayTeamPoints()) {

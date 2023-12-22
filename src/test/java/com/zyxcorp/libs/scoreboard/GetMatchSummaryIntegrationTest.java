@@ -23,7 +23,6 @@ class GetMatchSummaryIntegrationTest {
     @InjectMocks
     private MatchScoreBoardService matchScoreBoardService;
 
-
     @Test
     void test_get_shouldReturnAllMatchOrderByTotalScoreAndCreatedTime() throws MatchNotFoundException {
 
@@ -34,11 +33,11 @@ class GetMatchSummaryIntegrationTest {
         assertNotNull(matches);
         assertEquals(5, matches.size());
 
-        assertMatches(matches.get(0), "Uruguay", 6, "Italy", 6);
-        assertMatches(matches.get(1), "Spain", 10, "Brazil", 2);
-        assertMatches(matches.get(2), "Mexico", 0, "Canada", 5);
-        assertMatches(matches.get(3), "Argentina", 3, "Australia", 1);
-        assertMatches(matches.get(4), "Germany", 2, "France", 2);
+        assertMatch(matches.get(0), "Uruguay", 6, "Italy", 6);
+        assertMatch(matches.get(1), "Spain", 10, "Brazil", 2);
+        assertMatch(matches.get(2), "Mexico", 0, "Canada", 5);
+        assertMatch(matches.get(3), "Argentina", 3, "Australia", 1);
+        assertMatch(matches.get(4), "Germany", 2, "France", 2);
 
     }
 
@@ -48,7 +47,7 @@ class GetMatchSummaryIntegrationTest {
         MatchNotFoundException exception = assertThrows(MatchNotFoundException.class,
                 () -> matchScoreBoardService.get());
 
-        assertEquals("Match not found", exception.getMessage());
+        assertEquals("No matches not found", exception.getMessage());
         assertEquals("E106", exception.getContract());
 
     }
@@ -71,11 +70,9 @@ class GetMatchSummaryIntegrationTest {
                 new MatchDto(new ScoreDto("Argentina", 3), new ScoreDto("Australia", 1)));
     }
 
-    private void assertMatches(MatchDto match,
-                               String homeTeamName,
-                               int homeTeamScore,
-                               String awayTeamName,
-                               int awayTeamScore) {
+    private void assertMatch(MatchDto match,
+                             String homeTeamName, int homeTeamScore,
+                             String awayTeamName, int awayTeamScore) {
         assertEquals(homeTeamName, match.homeTeam().name());
         assertEquals(homeTeamScore, match.homeTeam().points());
         assertEquals(awayTeamName, match.awayTeam().name());
